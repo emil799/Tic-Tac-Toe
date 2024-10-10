@@ -1,6 +1,5 @@
 # Tic-Tac-Toe
 
-# Tic Tac Toe Game
 
 <p align="center">
   <img src="TicTacToe/app/src/main/assets/ic_launcher.png" alt="Tic Tac Toe Icon" width="100" height="100">
