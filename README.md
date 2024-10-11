@@ -7,7 +7,7 @@
 
 ## Description
 
-This is a **Tic Tac Toe** game built with HTML, CSS, and JavaScript, allowing you to play against another player or a bot. It offers features like name input for players and score tracking. You can choose between two game modes:
+This is a **Tic Tac Toe** game built with HTML, CSS, JavaScript and Kotlin, allowing you to play against another player or a bot. It offers features like name input for players and score tracking. You can choose between two game modes:
 - **Player vs Player (PvP)**: Play against another human.
 - **Player vs Bot**: Play against a basic AI bot.
 
