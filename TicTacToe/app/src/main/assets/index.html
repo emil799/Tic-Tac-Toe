@@ -68,6 +68,7 @@ let playerOName = 'Player O';
 let playerXScore = 0;
 let playerOScore = 0;
 let currentPlayer = 'X';
+let playerChoice = '';
 let gameState = ['', '', '', '', '', '', '', '', ''];
 const winningCombos = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -101,20 +102,26 @@ function setupGame(type) {
 function startGame() {
   nameInputDiv.style.display = 'none';
   gameContentDiv.style.display = 'block';
-  
+
   if (gameType === 'pvp') {
       playerXName = document.getElementById('playerXName').value || 'Player X';
       playerOName = document.getElementById('playerOName').value || 'Player O';
   } else if (gameType === 'bot') {
-      playerXName = document.getElementById('playerName').value || 'Player';
-      currentPlayer = document.getElementById('playerChoice').value;
-      playerOName = 'Bot';
-      // If the player chose to be O, let the bot start first
-      if (currentPlayer === 'O') {
-          setTimeout(makeBotMove, 600); // Start the bot's move
+      playerName = document.getElementById('playerName').value || 'Player';
+      playerChoice = document.getElementById('playerChoice').value;
+      
+      if (playerChoice === 'X') {
+          playerXName = playerName;
+          playerOName = 'Bot';
+          currentPlayer = 'X'; // Играчът започва, ако е избрал "X"
+      } else {
+          playerXName = 'Bot';
+          playerOName = playerName;
+          currentPlayer = 'X'; // Ботът започва първи, ако потребителят е "O"
+          setTimeout(makeBotMove, 600); // Започваме с хода на бота
       }
   }
-  
+
   status.textContent = `Current player: ${currentPlayer === 'X' ? playerXName : playerOName}`;
   resetButton.style.display = 'block';
 }
@@ -149,13 +156,15 @@ function makeMove(cellIndex) {
       } else {
           currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
           status.textContent = `Current player: ${currentPlayer === 'X' ? playerXName : playerOName}`;
-          if (gameType === 'bot' && currentPlayer === 'O') {
+          if (gameType === 'bot' && currentPlayer === 'X' && playerChoice === 'O') {
               setTimeout(makeBotMove, 600); // Add a slight delay for bot move
+          }
+          else if (gameType === 'bot' && currentPlayer === 'O' && playerChoice === 'X'){
+            setTimeout(makeBotMove, 600); // Add a slight delay for bot move
           }
       }
   }
 }
-
 function makeBotMove() {
       const winningCombos = [
           [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -222,13 +231,29 @@ function checkWinner() {
 }
 
 function resetGame() {
-  currentPlayer = 'X';
+  // Изчистваме игровото състояние
   gameState = ['', '', '', '', '', '', '', '', ''];
   cells.forEach(cell => cell.textContent = '');
+
+  // Актуализираме резултата на играчите
   score.textContent = `${playerXName} (X): ${playerXScore} | ${playerOName} (O): ${playerOScore}`;
-  status.textContent = `Current player: ${playerXName}`;
+  
+  // Определяме кой играч ще започне след рестартиране
+  currentPlayer = 'X'; // Започваме винаги с X за по-предсказуемо поведение
+  
+  // Ако играем срещу бот и ботът е избран за O, тогава той трябва да започне
+  if (gameType === 'bot' && playerChoice === 'O') {
+    currentPlayer = 'X';
+    setTimeout(makeBotMove, 600); // Закъснение, за да имитира мислене на бот
+  }
+  
+  // Актуализираме състоянието на дисплея
+  status.textContent = `Current player: ${currentPlayer === 'X' ? playerXName : playerOName}`;
+  
+  // Скриваме бутона за рестарт, докато играта не приключи отново
   document.getElementById('resetButton').style.display = 'none';
 }
+
 </script>
 
 </body>
