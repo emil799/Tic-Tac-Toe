@@ -30,5 +30,5 @@ This is a **Tic Tac Toe** game built with HTML, CSS, JavaScript and Kotlin, allo
 
 You can download the Android APK to play the game on your Android device.
 
-[Download APK](https://github.com/emil799/Tic-Tac-Toe/releases/tag/v.1.0.0/app-debug.apk
+[Download APK](https://github.com/emil799/Tic-Tac-Toe/releases/tag/v.1.0.0/Tic-Tac-Toe.apk
 )
